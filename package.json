@@ -10,7 +10,9 @@
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "verify:migration": "node scripts/verify-migration.mjs",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:content": "playwright test --grep-invert @gpu",
+    "test:graphics": "playwright test --grep @gpu"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

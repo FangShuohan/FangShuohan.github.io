@@ -61,7 +61,7 @@ test('articles retain text and formulas with JavaScript disabled',async({browser
   expect(await page.locator('.katex').count()).toBeGreaterThan(20);
   await expect(page.locator('table').first()).toBeVisible();await context.close();
 });
-test('the original glass scene renders, selects, extracts and releases resources',async({page})=>{
+test('the original glass scene renders, selects, extracts and releases resources @gpu',async({page})=>{
   await page.addInitScript(()=>localStorage.setItem('shuohan-effects','on'));
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   const missing=[];page.on('response',r=>{if(r.status()>=400)missing.push(r.url());});

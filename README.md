@@ -78,7 +78,7 @@ npx playwright install chromium
 npm test
 ```
 
-测试包含逐篇直链/刷新、图片、数学与表格、原稿哈希、搜索筛选、主题、移动端目录/图片查看、无 JavaScript 阅读，以及 3D 选择、抽取与资源释放。截图保存在 `verification/`。
+测试包含逐篇直链/刷新、图片、数学与表格、原稿哈希、搜索筛选、主题、移动端目录/图片查看、无 JavaScript 阅读，以及 3D 选择、抽取与资源释放。截图保存在 `verification/`。`npm run test:content` 运行 4 项阅读/导航测试，供无 GPU 的 GitHub runner 执行；`npm run test:graphics` 单独验证原始 PBR 三维场景，需要支持硬件 WebGL 的浏览器。`npm test` 执行全部 5 项。
 
 ## 视觉来源
 

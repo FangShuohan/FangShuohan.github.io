@@ -27,7 +27,9 @@ jobs:
       - name: Install browser
         run: npx playwright install --with-deps chromium
       - name: Verify article reading and navigation
-        run: npm test
+        # GitHub-hosted Linux runners have no hardware GPU. The original PBR
+        # scene is verified with test:graphics in a hardware-backed browser.
+        run: npm run test:content
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
