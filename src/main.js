@@ -1,5 +1,6 @@
 import 'katex/dist/katex.min.css';
 import './style.css';
+import './reader-motion.css';
 import posts from '../public/data/posts.json';
 import { logo, bootMarkContour } from './rhine/brand';
 
@@ -87,6 +88,16 @@ $$('.site-header nav>a').forEach(a=>{if(location.pathname.startsWith(new URL(a.h
 
 // Long-form reading tools work independently of the 3D homepage.
 if($('.reader')){
+  // Open the file once; deep links and history restoration keep their reading position.
+  const layout=$('.reader-layout');
+  const navigation=performance.getEntriesByType('navigation')[0];
+  if(!reduced&&!location.hash&&navigation?.type!=='back_forward'){
+    layout.classList.add('reader-opening');
+    const finishOpening=()=>layout.classList.remove('reader-opening');
+    setTimeout(finishOpening,1200);
+    window.addEventListener('pageshow',event=>{if(event.persisted)finishOpening();});
+    window.addEventListener('hashchange',finishOpening,{once:true});
+  }
   const progress=$('.reading-progress i');
   const updateProgress=()=>{const reader=$('.reader'),max=reader.offsetTop+reader.offsetHeight-innerHeight;progress.style.width=`${Math.min(100,Math.max(0,scrollY/Math.max(1,max)*100))}%`;};
   window.addEventListener('scroll',updateProgress,{passive:true});window.addEventListener('resize',updateProgress);updateProgress();

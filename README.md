@@ -55,6 +55,7 @@ dist/ → GitHub Actions → GitHub Pages
 ## 改视觉和动效
 
 - 全站颜色、字级、断点和动效关键帧在 `src/style.css`。
+- 文章读取动画在 `src/reader-motion.css`：分隔线展开与金色扫描、标题和阅读信息分层进入、正文前六个内容块短暂淡入，约一秒完成。`src/main.js` 控制触发与清理；章节直达、历史返回、减少动态效果和打印模式跳过动画。正文不使用滚动隐藏，也不加载首页 3D 场景。
 - 归档、分类、标签页的装饰仪器在 `scripts/motion-markup.mjs`，对应样式使用 `.instrument-archive`、`.instrument-category`、`.instrument-tag`。
 - 关于页的扫描圆环是 `profileFrame()`，开场描线、扫描、读数和欢迎文案在 `src/main.js` 的 `boot()`。
 - 页面切换使用 CSS `@view-transition`；不支持该 API 的浏览器仍会正常跳转。`prefers-reduced-motion: reduce` 会关闭开场、页面过渡、扫描和连续旋转。

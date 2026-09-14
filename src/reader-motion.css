@@ -1,0 +1,64 @@
+/* A single file-opening sequence: index, title, metadata, then the first lines.
+   No scroll-triggered hiding: the complete article always remains readable. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .reader-opening .article-header {
+    position: relative;
+    border-bottom-color: transparent;
+  }
+
+  .reader-opening .article-header::before,
+  .reader-opening .article-header::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    transform-origin: left;
+  }
+
+  .reader-opening .article-header::before {
+    background: var(--ink);
+    animation: reader-rule .8s .12s cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  .reader-opening .article-header::after {
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: reader-scan .95s .12s ease-in-out both;
+  }
+
+  .reader-opening .reader-aside > *,
+  .reader-opening .article-header > *,
+  .reader-opening .mobile-toc,
+  .reader-opening .reader > .prose > :nth-child(-n+6) {
+    animation: reader-unfold .65s var(--reader-delay, .12s) cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  .reader-opening .reader-aside > * { --reader-delay: .08s; }
+  .reader-opening .reader-aside .toc { --reader-delay: .24s; }
+  .reader-opening .article-header h1 { --reader-delay: .18s; }
+  .reader-opening .article-tags { --reader-delay: .26s; }
+  .reader-opening .article-author { --reader-delay: .3s; }
+  .reader-opening .mobile-toc { --reader-delay: .32s; }
+  .reader-opening .reader > .prose > :nth-child(-n+6) { --reader-delay: .34s; }
+  .reader-opening .reader > .prose > :nth-child(2) { --reader-delay: .37s; }
+  .reader-opening .reader > .prose > :nth-child(n+3):nth-child(-n+6) { --reader-delay: .4s; }
+}
+
+@keyframes reader-unfold {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes reader-rule {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes reader-scan {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
+  25% { opacity: 1; }
+  75% { opacity: 1; clip-path: inset(0 0 0 75%); }
+  100% { opacity: 0; clip-path: inset(0 0 0 100%); }
+}
