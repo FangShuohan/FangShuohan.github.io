@@ -1,0 +1,9 @@
+* text=auto eol=lf
+# Keep the migration originals byte-for-byte, including their line endings.
+source/** -text -whitespace
+*.glb binary
+*.woff2 binary
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.pdf binary

@@ -1,0 +1,10 @@
+/node_modules/
+/dist/
+/public/
+/.generated/
+/verification/
+/.local/
+*.log
+# Reference-only working files are retained locally.
+/RhineLabUI/
+**/*Zone.Identifier
