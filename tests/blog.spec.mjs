@@ -36,7 +36,11 @@ test('search, categories, tags, about and theme persistence',async({page})=>{
   await page.goto('/tag/?tag=Diary');await expect(page.locator('.file-card:visible')).toHaveCount(3);
   await page.goto('/category/?category='+encodeURIComponent('笔记'));await expect(page.locator('.file-card:visible')).toHaveCount(3);
   await page.goto('/about/');await expect(page.locator('.about-page')).toContainText('方朔寒&凛冬');
+  await expect(page.locator('.profile-frame')).toHaveCount(1);
   await page.goto('/archives/');await expect(page.locator('.archive-row')).toHaveCount(8);
+  await expect(page.locator('.page-instrument.instrument-archive')).toHaveCount(1);
+  await page.goto('/category/');await expect(page.locator('.page-instrument.instrument-category')).toHaveCount(1);
+  await page.goto('/tag/');await expect(page.locator('.page-instrument.instrument-tag')).toHaveCount(1);
 });
 test('mobile reading, table scrolling, TOC and image dialog',async({page})=>{
   await page.setViewportSize({width:390,height:844});

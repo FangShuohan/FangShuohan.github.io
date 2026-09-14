@@ -113,6 +113,7 @@ export async function generate() {
   await fs.writeFile('.generated/content.json',JSON.stringify(data));
   const index=posts.map(({html,content,toc,meta,...p})=>p);
   await fs.writeFile('public/data/posts.json',JSON.stringify(index));
+  await fs.writeFile('public/data/site.json',JSON.stringify({wordmark:config.wordmark,suffix:config.wordmarkSuffix,brand:`${config.wordmark} ${config.wordmarkSuffix}`}));
   // Reuse local assets. CSS URLs are relative so project paths also work.
   await fs.mkdir('public/assets',{recursive:true});
   await fs.copyFile('vendor/rhine/assets/archive-cassette.glb','public/assets/archive-cassette.glb');

@@ -1,4 +1,6 @@
 import posts from '../../public/data/posts.json';
+import site from '../../public/data/site.json';
+export const brandName = site.brand;
 export const archiveColumns = [...new Set(posts.flatMap(p=>p.categories))];
 export function columnFiles(lane:number) {
   const category=archiveColumns[((lane % archiveColumns.length)+archiveColumns.length)%archiveColumns.length];

@@ -1,10 +1,12 @@
-# 方朔寒的博客
+# SHUOHAN BLOG
 
 地址：**https://fangshuohan.github.io/**
 
 目标仓库：`FangShuohan/FangShuohan.github.io`
 
-由原博客 `source/` 生成的静态网站。首页直接移植 RhineLabUI 的玻璃档案模型、阵列波浪、拖拽惯性、档案抽取与主题渐变；文章以静态 HTML 发布，可直接访问、刷新、被搜索引擎收录，并支持无 JavaScript 阅读。
+由原博客 `source/` 生成的静态网站。全站名称为 **SHUOHAN BLOG**。归档、分类、标签和关于页加入了 RhineLabUI 风格的扫描、轨道、卡片与扫描环动效，页面之间使用 View Transition。
+
+完整架构、文件职责、日常维护和视觉修改方法见 [ARCHITECTURE.md](ARCHITECTURE.md)。首页直接移植 RhineLabUI 的玻璃档案模型、阵列波浪、拖拽惯性、档案抽取与主题渐变；文章以静态 HTML 发布，可直接访问、刷新、被搜索引擎收录，并支持无 JavaScript 阅读。
 
 ## 本地运行
 
@@ -82,7 +84,7 @@ npm test
 
 ## 视觉来源
 
-RhineLabUI 原始场景的 22 个本地模块被保留在 `src/rhine/`，MIT 许可见同目录 `LICENSE`。`data.ts` 连接博客文章，模型标签替换为 SHUOHAN LAB，循环重定位改为实际分类数量。`scripts/vendor-rhine.mjs` 可从原参考源码重现提取步骤。
+RhineLabUI 原始场景的 22 个本地模块被保留在 `src/rhine/`，MIT 许可见同目录 `LICENSE`。`data.ts` 连接博客文章，模型标签替换为 SHUOHAN BLOG，循环重定位改为实际分类数量。`scripts/vendor-rhine.mjs` 可从原参考源码重现提取步骤。
 
 MiSans 使用参考工程中已有的本地 Regular 字体分片与原始许可，不需要外部字体 CDN。文章、数学字体、模型与媒体同源部署。低性能设备可关闭首页动效，文章阅读不加载 3D 场景。
 

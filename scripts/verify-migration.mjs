@@ -26,6 +26,19 @@ for(const post of posts){
   for(const image of post.images)await fs.access(path.join('dist',image));
 }
 const htmlFiles=(await walk('dist')).filter(f=>f.endsWith('.html'));
+const archiveHtml=await fs.readFile('dist/archives/index.html','utf8');
+assert.ok(archiveHtml.includes('page-instrument instrument-archive'),'Archive motion instrument is present');
+const categoryHtml=await fs.readFile('dist/category/index.html','utf8');
+assert.ok(categoryHtml.includes('page-instrument instrument-category'),'Category motion instrument is present');
+const tagHtml=await fs.readFile('dist/tag/index.html','utf8');
+assert.ok(tagHtml.includes('page-instrument instrument-tag'),'Tag motion instrument is present');
+const aboutHtml=await fs.readFile('dist/about/index.html','utf8');
+assert.ok(aboutHtml.includes('profile-frame'),'About motion frame is present');
+assert.ok(aboutHtml.includes('SHUOHAN BLOG'),'Brand name is present on about page');
+const cssFile=(await fs.readdir('dist/assets')).find(name=>name.endsWith('.css'));
+assert.ok(cssFile,'Built stylesheet is present');
+const css=await fs.readFile(path.join('dist/assets',cssFile),'utf8');
+assert.ok(css.includes('@view-transition{navigation:auto}'),'Cross-page transition is enabled');
 let localLinks=0;
 for(const file of htmlFiles){
   const html=await fs.readFile(file,'utf8');

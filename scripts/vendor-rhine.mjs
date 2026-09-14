@@ -15,9 +15,9 @@ async function copy(name){
 }
 await copy('scene.ts');
 let scene=await fs.readFile(path.join(destination,'scene.ts'),'utf8');
-scene=scene.replace('fileAtSlot, fileLocation','fileAtSlot, fileLocation, archiveColumns')
+scene=scene.replace('fileAtSlot, fileLocation','fileAtSlot, fileLocation, archiveColumns, brandName')
   .replace('Math.round((this.selectedCell.lane - 2) / 5) * 5','Math.round((this.selectedCell.lane - 2) / archiveColumns.length) * archiveColumns.length')
-  .replace('"RHINE LAB, LLC."','"SHUOHAN LAB"').replace('"R L / I S"','"S H / B L"');
+  .replace('"RHINE LAB, LLC."','brandName').replace('"R L / I S"','"S H / B L"');
 await fs.writeFile(path.join(destination,'scene.ts'),scene);
 await fs.copyFile('RhineLabUI/LICENSE',path.join(destination,'LICENSE'));
 await fs.mkdir('vendor/rhine/assets',{recursive:true});
