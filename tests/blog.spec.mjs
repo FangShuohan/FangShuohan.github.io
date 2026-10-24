@@ -4,7 +4,7 @@ const data=JSON.parse(await fs.readFile('.generated/content.json','utf8'));
 test.beforeEach(async({page})=>{
   await page.addInitScript(()=>{sessionStorage.setItem('shuohan-entered','1');localStorage.setItem('shuohan-effects','off');});
 });
-test('all eight articles are readable at direct static URLs, with original media and math',async({page})=>{
+test('all articles are readable at direct static URLs, with original media and math',async({page})=>{
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   const missing=[];page.on('response',r=>{if(r.status()>=400)missing.push(r.url());});
   for(const p of data.posts){
@@ -26,18 +26,21 @@ test('all eight articles are readable at direct static URLs, with original media
   expect(errors).toEqual([]);expect(missing).toEqual([]);
 });
 test('search, categories, tags, about and theme persistence',async({page})=>{
-  await page.goto('/');await expect(page.locator('.file-card')).toHaveCount(8);
-  await page.locator('[data-filter="日记"]').click();await expect(page.locator('.file-card:visible')).toHaveCount(3);
+  const diaryCount=data.posts.filter(p=>p.categories.includes('日记')).length;
+  const diaryTagCount=data.posts.filter(p=>p.tags.includes('Diary')).length;
+  const noteCategoryCount=data.posts.filter(p=>p.categories.includes('笔记')).length;
+  await page.goto('/');await expect(page.locator('.file-card')).toHaveCount(data.posts.length);
+  await page.locator('[data-filter="日记"]').click();await expect(page.locator('.file-card:visible')).toHaveCount(diaryCount);
   await page.locator('[data-filter=""]').click();await page.locator('#index-search').fill('半导体');await expect(page.locator('.file-card:visible')).toHaveCount(1);
   await page.locator('#index-search').fill('不存在的检索词abcdefgh');await expect(page.locator('.empty-state')).toBeVisible();
   await page.getByRole('button',{name:'搜索文章',exact:true}).click();await page.locator('#global-search').fill('边际');
   await expect(page.locator('.search-result')).toHaveCount(1);await page.keyboard.press('Escape');await expect(page.locator('#search-dialog')).not.toBeVisible();
   await page.locator('[data-action=theme]').click();await expect(page.locator('html')).toHaveAttribute('data-theme','dark');await page.reload();await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
-  await page.goto('/tag/?tag=Diary');await expect(page.locator('.file-card:visible')).toHaveCount(3);
-  await page.goto('/category/?category='+encodeURIComponent('笔记'));await expect(page.locator('.file-card:visible')).toHaveCount(3);
+  await page.goto('/tag/?tag=Diary');await expect(page.locator('.file-card:visible')).toHaveCount(diaryTagCount);
+  await page.goto('/category/?category='+encodeURIComponent('笔记'));await expect(page.locator('.file-card:visible')).toHaveCount(noteCategoryCount);
   await page.goto('/about/');await expect(page.locator('.about-page')).toContainText('方朔寒&凛冬');
   await expect(page.locator('.profile-frame')).toHaveCount(1);
-  await page.goto('/archives/');await expect(page.locator('.archive-row')).toHaveCount(8);
+  await page.goto('/archives/');await expect(page.locator('.archive-row')).toHaveCount(data.posts.length);
   await expect(page.locator('.page-instrument.instrument-archive')).toHaveCount(1);
   await page.goto('/category/');await expect(page.locator('.page-instrument.instrument-category')).toHaveCount(1);
   await page.goto('/tag/');await expect(page.locator('.page-instrument.instrument-tag')).toHaveCount(1);

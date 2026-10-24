@@ -97,7 +97,7 @@ export async function generate() {
     const slug=path.basename(file,'.md');
     const rendered=renderDocument(body,file);
     const list=x=>x == null ? [] : (Array.isArray(x) ? x.flat(Infinity) : [x]).map(String);
-    const post={slug, title:String(meta.title||slug), date:meta.date?String(meta.date):null, categories:list(meta.categories), tags:list(meta.tags), meta, content:body, ...rendered,
+    const post={slug, title:String(meta.title||slug), date:meta.date?String(meta.date).replace(/：/g,':').trim():null, categories:list(meta.categories), tags:list(meta.tags), meta, content:body, ...rendered,
       path:url(`posts/${encodeURIComponent(slug)}/`), original:url(`originals/_posts/${encodeURIComponent(slug)}.md`),
       minutes:Math.max(1,Math.ceil(body.length/450)), excerpt:rendered.text.slice(0,150), sha256:hash(await fs.readFile(file))};
     posts.push(post);
